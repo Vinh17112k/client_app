@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> getListProductIn(
         @Param("brandId") List<Long> brandId,
         @Param("categoryId") List<Long> categoryId,
-        @Param("fromPrice") Long fromPrice,
+        @Param("fromPrice") Long fromPrie,
         @Param("toPrice") Long toPrice,
         @Param("name") String name, Pageable pageable);
 //    product in order detail
