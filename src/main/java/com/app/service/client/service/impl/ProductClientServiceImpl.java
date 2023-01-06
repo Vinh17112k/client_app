@@ -117,7 +117,7 @@ public class ProductClientServiceImpl implements ProductClientService {
                 break;
             case PRODUCT_BY_TYPE:
                 log.debug("relative product order by price");
-                page = getProductByType(pageable);
+                page = getProductByType(searchDTO.getProductTypeId(),pageable);
                 productDTOS = productClientMapper.toList(page.getContent());
                 setImage(productDTOS);
                 setStar(productDTOS);
@@ -142,11 +142,11 @@ public class ProductClientServiceImpl implements ProductClientService {
     }
 
     private Page<Product> getProductLastest(Pageable pageable) {
-        return productRepository.findAllByActivePage(pageable);
+        return productRepository.findNewProduct(pageable);
     }
 
-    private Page<Product> getProductByType(Pageable pageable) {
-        return productRepository.findAllByActivePage(pageable);
+    private Page<Product> getProductByType(Long productTypeId, Pageable pageable) {
+        return productRepository.findRelativeProduct(productTypeId,pageable);
     }
 
     private Page<Product> getProduct(ProductSearchRequestDTO searchDTO, Pageable pageable) {
