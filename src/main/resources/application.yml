@@ -3,7 +3,7 @@ server:
   port: 5000
   servlet:
     context-path: /
-serverUrl: http://localhost:8082
+serverUrl: http://localhost:3000
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
@@ -73,3 +73,7 @@ paypal:
   clientId: AY71RNcjABIXpStOyxscOnhDZbNfP9C5NwxbpdII9QeY8xixFkLc8yHLM_K65iTfnUATB2PnAQWTeFvr
   clientSecret: EONUD4-ObRB9gl_r5pcGkk2FhAE49sVbfWmeALl9cNDK1-aLdHnt0IZTdk3x_QypIs854CiH3Yqz5qL-
   environmentMode: sandbox
+cloud:
+  name: divmj7rv7
+  secret: Hg7oKtmZEjukvrcJvW-5jRVFR-g
+  key: 729439797434637

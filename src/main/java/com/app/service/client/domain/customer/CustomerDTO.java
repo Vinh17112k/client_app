@@ -42,7 +42,7 @@ public class CustomerDTO {
   private Short allowReceiveExcel;
   private Short allowReceivePdf;
   private String employeeCode;
-  private byte[] avatar;
+  private String avatar;
   private Integer gender;
   private String address;
   private AuthProvider provider;
