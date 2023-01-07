@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 //    suggestion
-    @Query(value="select p from Product p join OrderDetail od on p.id = od.product.id "
+    @Query(value="select distinct p from Product p join OrderDetail od on p.id = od.product.id "
         + " join Order o on o.orderId = od.order.orderId "
         + "where 1=1  and p.isDeleted=0  order by p.createdDate ")
     public Page<Product> findAllByActivePage(Pageable pageable);
