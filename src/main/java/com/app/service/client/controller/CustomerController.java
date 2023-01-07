@@ -118,11 +118,11 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/update", consumes = {"multipart/form-data"})
-    public ResponseEntity<ApiResponseData<CustomerDTO>> updateUser(
+    public ResponseEntity<ApiResponseData<CustomerTokenDTO>> updateUser(
         @ParameterObject CustomerCreatorDTO customerCreatorDTO,
         @RequestParam(required = false) MultipartFile avatar)
         throws ValidateException, IOException {
-        return ResponseEntity.ok(ApiResponseData.<CustomerDTO>builder()
+        return ResponseEntity.ok(ApiResponseData.<CustomerTokenDTO>builder()
             .errorCode(DataUtils.safeToString(HttpStatus.OK.value()))
             .messages(Arrays.asList("success"))
             .data(customerService.updateCustomer(customerCreatorDTO))

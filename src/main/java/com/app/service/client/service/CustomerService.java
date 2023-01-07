@@ -1,10 +1,7 @@
 package com.app.service.client.service;
 
 import com.app.service.client.config.exceptions.ValidateException;
-import com.app.service.client.domain.customer.CustomerCreatorDTO;
-import com.app.service.client.domain.customer.CustomerDTO;
-import com.app.service.client.domain.customer.CustomerSearchDTO;
-import com.app.service.client.domain.customer.PasswordDTO;
+import com.app.service.client.domain.customer.*;
 import com.app.service.client.model.Customer;
 import com.app.service.client.utils.PaginationResultUtils;
 import org.springframework.data.domain.Page;
@@ -20,7 +17,7 @@ public interface CustomerService extends UserDetailsService {
     CustomerDTO createCustomer(CustomerCreatorDTO customerCreatorDTO)
         throws ValidateException;
 
-    CustomerDTO updateCustomer(CustomerCreatorDTO customerCreatorDTO)
+    CustomerTokenDTO updateCustomer(CustomerCreatorDTO customerCreatorDTO)
         throws ValidateException, IOException;
 
     Customer loadByUsername(String username) throws UsernameNotFoundException;

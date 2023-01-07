@@ -1,11 +1,10 @@
 package com.app.service.client.service.impl;
 
+import com.app.service.client.config.CloudinaryConfig;
 import com.app.service.client.config.exceptions.ValidateException;
 import com.app.service.client.config.security.SecurityUtilsClient;
-import com.app.service.client.domain.customer.CustomerCreatorDTO;
-import com.app.service.client.domain.customer.CustomerDTO;
-import com.app.service.client.domain.customer.CustomerSearchDTO;
-import com.app.service.client.domain.customer.PasswordDTO;
+import com.app.service.client.config.security.service.TokenProvider;
+import com.app.service.client.domain.customer.*;
 import com.app.service.client.mapper.CusMapper;
 import com.app.service.client.model.Customer;
 import com.app.service.client.repository.CustomerRepository;
@@ -14,6 +13,7 @@ import com.app.service.client.service.MessageService;
 import com.app.service.client.utils.DataUtils;
 import com.app.service.client.utils.PaginationResultUtils;
 import com.app.service.client.validator.CommonValidator;
+import com.cloudinary.utils.ObjectUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,7 +62,10 @@ public class CustomerServiceImpl implements CustomerService {
     private JavaMailSender emailSender;
     @Autowired
     private Configuration config;
-    private final String FOLDER_PATH = "D:/product_images/";
+    @Autowired
+    private CloudinaryConfig cloudinaryConfig;
+    @Autowired
+    private TokenProvider tokenProvider;
 
     @Override
     public CustomerDTO createCustomer(CustomerCreatorDTO customerCreatorDTO)
@@ -85,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO updateCustomer(CustomerCreatorDTO customerCreatorDTO)
+    public CustomerTokenDTO updateCustomer(CustomerCreatorDTO customerCreatorDTO)
         throws ValidateException, IOException {
         commonValidator.validateInput(customerCreatorDTO);
         Customer customer = customerRepository.findById(customerCreatorDTO.getCustomerId())
@@ -103,11 +107,11 @@ public class CustomerServiceImpl implements CustomerService {
       if (DataUtils.isNull(customerCreatorDTO.getAvatar()) && !DataUtils.isNullOrEmpty(
           customer.getAvatarUser())) {
         cusUpdate.setAvatarUser(customer.getAvatarUser());
-      } else if (!DataUtils.isNull(customerCreatorDTO.getAvatar().getOriginalFilename())) {
+      } else if (!DataUtils.isNull(customerCreatorDTO.getAvatar())) {
         MultipartFile avatar = customerCreatorDTO.getAvatar();
-        String filePath = FOLDER_PATH + avatar.getOriginalFilename();
-        //save to local path
-        avatar.transferTo(new File(filePath));
+        Map uploadResult = cloudinaryConfig.upload(avatar.getBytes(),
+                  ObjectUtils.asMap("Home/product_images", "auto"));
+          String filePath = uploadResult.get("url").toString();
         cusUpdate.setAvatarUser(filePath);
       }
         String password = customer.getPassword();
@@ -118,10 +122,13 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(cusUpdate);
         CustomerDTO customerDTO = cusMapper.toDto(cusUpdate);
         if (!DataUtils.isNullOrEmpty(cusUpdate.getAvatarUser())) {
-            byte[] image = Files.readAllBytes(new File(cusUpdate.getAvatarUser()).toPath());
-            customerDTO.setAvatar(image);
+            customerDTO.setAvatar(cusUpdate.getAvatarUser());
         }
-        return customerDTO;
+        CustomerTokenDTO userTokenDTO = CustomerTokenDTO.builder()
+                .customerDTO(customerDTO)
+                .token(null)
+                .build();
+        return userTokenDTO;
     }
 
     @Override

@@ -26,6 +26,7 @@ public class CustomerCreatorDTO {
   private String issueDate;
   private Integer status;
   private Short isViettel;
+  private String wardCode;
   private String password;
   private List<String> ipAddress;
   private Long isHasIpAddress;

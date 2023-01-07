@@ -50,7 +50,7 @@ public class PayPalServiceImpl implements PayPalService {
         // (It will be called by PayPal after transaction submit or cancel)
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl(serverUrl + "/api/v2/payments/paypal/cancel");
-        redirectUrls.setReturnUrl(serverUrl + "/api/v2/payments/paypal/success");
+        redirectUrls.setReturnUrl(serverUrl + "/success");
         // Payment amount
         Amount amount = new Amount();
         amount.setCurrency(CURRENCY);
