@@ -260,7 +260,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             helper.setTo(customer.getEmail());
             helper.setText(html, true);
-            helper.setSubject(DataUtils.EMAIL_SUBJECT_ORDER);
+            helper.setSubject(DataUtils.EMAIL_SUBJECT);
             helper.setFrom(DataUtils.EMAIL_SENDER);
             emailSender.send(message);
 

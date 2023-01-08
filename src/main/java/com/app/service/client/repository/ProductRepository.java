@@ -13,13 +13,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //    suggestion
     @Query(value="select distinct p from Product p join OrderDetail od on p.id = od.product.id "
         + " join Order o on o.orderId = od.order.orderId "
-        + "where 1=1  and p.isDeleted=0  order by p.createdDate ")
+        + "where 1=1  and p.isDeleted=0  order by p.createdDate desc "
+        + "")
     public Page<Product> findAllByActivePage(Pageable pageable);
-    @Query(value="select p from Product p where 1=1  and isDeleted=0 order by createdDate ")
+    @Query(value="select p from Product p where 1=1  and isDeleted=0 order by createdDate desc")
     public Page<Product> findNewProduct(Pageable pageable);
     @Query(value="select p from Product p join ProductType pt "
         + " on p.productType.id = pt.id "
-        + "where 1=1  and p.isDeleted=0 and pt.id =:productTypeId order by p.createdDate ")
+        + "where 1=1  and p.isDeleted=0 and pt.id =:productTypeId order by p.createdDate desc ")
     public Page<Product> findRelativeProduct(@Param("productTypeId") Long productTypeId, Pageable pageable);
     @Query("select p from Product p join p.make m on p.make.id = m.id "
         + " join p.productType pt on p.productType.id = pt.id" +

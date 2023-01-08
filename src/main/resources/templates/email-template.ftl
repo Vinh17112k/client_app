@@ -68,7 +68,7 @@ background-color: #f7f7ff;">
 								</div>
 								<div class="col invoice-details" style="text-align: right">
 									<h1 class="invoice-id" style="margin-top: 0;
-    color: #0d6efd">INVOICE 3-2-1</h1>
+    color: #0d6efd">Hóa đơn thanh toán</h1>
 									<div class="date">${orderDetailDTO.order.orderDate}</div>
 								</div>
 							</div>
@@ -114,17 +114,7 @@ background-color: #f7f7ff;">
     font-weight: 400;
     font-size: 16px; padding: 15px;
     background: #eee;
-    border-bottom: 1px solid #fff">ĐƠN GIÁ</th>
-									<th class="text-right" style="white-space: nowrap;
-    font-weight: 400;
-    font-size: 16px; padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff">SỐ LƯỢNG</th>
-									<th class="text-right" style="white-space: nowrap;
-    font-weight: 400;
-    font-size: 16px; padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff">THÀNH TIÊN</th>
+    border-bottom: 1px solid #fff">Giá tiền</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -148,17 +138,8 @@ background-color: #f7f7ff;">
 										</h3>
 									<td class="unit" style="background: #ddd; text-align: right;
     font-size: 1.2em; padding: 15px;
-    background: #eee;
+    color: #0d6efd;
     border-bottom: 1px solid #fff">${product.price}</td>
-									<td class="qty" style="text-align: right;
-    font-size: 1.2em; padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff">${product.stockQty}</td>
-									<td class="total" style="background: #0d6efd;
-    color: #fff; text-align: right;
-    font-size: 1.2em; padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff">${product.price*product.stockQty}</td>
 								</tr>
 								</#list>
 								</tbody>
@@ -201,7 +182,13 @@ background-color: #f7f7ff;">
     padding: 10px 20px;
     font-size: 1.2em;
     border-top: 1px solid #aaa">Thuế giá trị</td>
-									<td>${orderDetailDTO.order.taxRate}</td>
+									<td style="background: 0 0;
+    border-bottom: none;
+    white-space: nowrap;
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-top: 1px solid #aaa" >${orderDetailDTO.order.taxRate}</td>
 								</tr>
 								<tr>
 									<td colspan="2" style="background: 0 0;
